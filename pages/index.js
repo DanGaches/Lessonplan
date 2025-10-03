@@ -1,29 +1,39 @@
+import { useState } from "react";
 import LessonForm from "../components/LessonForm";
+import ObservationForm from "../components/ObservationForm";
 
 export default function Home() {
-  return (
-    <div className="min-h-screen bg-gray-100 flex flex-col items-center p-6 md:p-12">
-      <h1 className="text-3xl md:text-4xl font-bold mb-8 text-center">
-        Lesson Planner Helper
-      </h1>
+  const [activeForm, setActiveForm] = useState("lesson"); // "lesson" or "observation"
 
-      <div className="w-full max-w-4xl">
-        <LessonForm />
+  return (
+    <div className="min-h-screen bg-gray-100 flex flex-col items-center p-8">
+      <h1 className="text-3xl font-bold mb-6">AI Prompt Generator</h1>
+
+      {/* Tabs / Buttons to switch forms */}
+      <div className="flex space-x-4 mb-6">
+        <button
+          onClick={() => setActiveForm("lesson")}
+          className={`px-4 py-2 rounded ${
+            activeForm === "lesson" ? "bg-blue-600 text-white" : "bg-gray-300"
+          }`}
+        >
+          Lesson Planner
+        </button>
+        <button
+          onClick={() => setActiveForm("observation")}
+          className={`px-4 py-2 rounded ${
+            activeForm === "observation" ? "bg-blue-600 text-white" : "bg-gray-300"
+          }`}
+        >
+          Lesson Observation
+        </button>
       </div>
 
-      <p className="mt-8 text-gray-500 text-center text-sm md:text-base">
-        Fill out the form above and click <strong>Generate ChatGPT Prompt</strong>. 
-        Copy the prompt and paste it into{" "}
-        <a
-          className="text-blue-600 underline"
-          href="https://chat.openai.com"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          ChatGPT
-        </a>{" "}
-        to generate your full lesson plan.
-      </p>
+      {/* Render the active form */}
+      <div className="w-full max-w-4xl">
+        {activeForm === "lesson" && <LessonForm />}
+        {activeForm === "observation" && <ObservationForm />}
+      </div>
     </div>
   );
 }
